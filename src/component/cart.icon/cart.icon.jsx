@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { CartContext } from "../context/cart.context";
 import "./cart.styles.scss";
 import { ReactComponent as ShoppingIcon } from "../../asset/shopping-bag.svg";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const CartIcon = () => {
   const { isCartDropdown, setisCartDropdown, cartCount } =

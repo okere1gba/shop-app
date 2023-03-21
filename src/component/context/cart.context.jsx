@@ -44,6 +44,9 @@ const clearCartItem = (cartItems, clearItem) =>
 export const CartContext = createContext({
   isCartDropdown: false,
   setisCartDropdown: () => {},
+  authenticate: false,
+  setAuthenticate: () => {},
+  toggleSinginPage: () => {},
   cartItems: [],
   addItemToCart: () => {},
   removeFromCart: () => {},
@@ -54,6 +57,7 @@ export const CartContext = createContext({
 
 export const CartProvider = ({ children }) => {
   const [isCartDropdown, setisCartDropdown] = useState(false);
+  const [authenticate, setAuthenticate] = useState(false);
   const [cartItems, setCartitems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
@@ -83,10 +87,14 @@ export const CartProvider = ({ children }) => {
   const clearItemFromCart = (clearItem) => {
     setCartitems(clearCartItem(cartItems, clearItem));
   };
+  const toggleSinginPage = () => setAuthenticate(!authenticate);
 
   const value = {
+    toggleSinginPage,
     isCartDropdown,
     setisCartDropdown,
+    authenticate,
+    setAuthenticate,
     addItemToCart,
     cartItems,
     cartCount,

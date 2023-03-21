@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import FormInput from "../forms/form.component";
 import "./signup.scss";
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../utills/firebase/firebase.utills";
 import { Link } from "react-router-dom";
 import Button from "../button/button.componet";
+import { CartContext } from "../context/cart.context";
 
 const defaultFormFields = {
   displayName: "",
@@ -18,7 +19,10 @@ const SignUp = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
+  const { authenticate, setAuthenticate } = useContext(CartContext);
+
   // Handles and keeps track of the changes as the user is type inside the text formField
+  const toggleSinginPage = () => setAuthenticate(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -109,7 +113,7 @@ const SignUp = () => {
         />
         <div className="link-button ">
           <Button buttonType="google">Sign Up</Button>
-          <Link to="/auth">
+          <Link onClick={toggleSinginPage}>
             <span className="signup-link"> Sign in with exiting account </span>
           </Link>
         </div>

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Link, CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../forms/form.component";
 import {
   signInWithGooglepopup,
   signInAuthUserWithEmailAndPassword,
 } from "../../utills/firebase/firebase.utills";
 
-//import { UserContext } from "../context/context.user";
+import { UserContext } from "../context/context.user";
 
 import Button from "../button/button.componet";
 import "./justsiginin.form.scss";
@@ -15,9 +17,14 @@ const defaultFormFields = {
   email: "",
   password: "",
 };
-const SigningIn = () => {
+const Loginform = () => {
+  const navigator = useNavigate();
+
+  const [loading, setloading] = useState(false);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+
+  // const {authenticate,setAuthenticate} = useContext(UserContext);
 
   // useContext implementation to help manage our states in the sign up form
 
@@ -31,29 +38,42 @@ const SigningIn = () => {
   };
 
   // submit funtionality
+  const resetForms = () => {
+    setFormFields(defaultFormFields);
+  };
+
+  const getResponse = async () => {
+    const response = await signInAuthUserWithEmailAndPassword(email, password);
+    resetForms();
+    return response;
+  };
+
   const HandleSubmit = async (event) => {
-    const resetForms = () => {
-      setFormFields(defaultFormFields);
-    };
     event.preventDefault();
     // make sure that the password and the confirm password are thesame
+    setloading(true);
 
-    try {
-      await signInAuthUserWithEmailAndPassword(email, password);
+    getResponse()
+      .then((response) => {
+        console.log("111");
+        if (response) {
+          navigator("/home");
+        }
+      })
 
-      resetForms();
-    } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
-          alert("incorrect password for email");
-          break;
-        case "auth/user-not-found":
-          alert("there is no user associated with this email");
-          break;
-        default:
-          console.log(error);
-      }
-    }
+      .catch((error) => {
+        switch (error.code) {
+          case "auth/wrong-password":
+            alert("incorrect password for email");
+            break;
+          case "auth/user-not-found":
+            alert("there is no user associated with this email");
+            break;
+          default:
+            console.log(error);
+        }
+      })
+      .finally(() => setloading(false));
     /*  if (error.code === "auth/wrong-password") {
         alert("incorrect password for email");
       } else if (error.code === "auth/user-not-found") {
@@ -64,6 +84,10 @@ const SigningIn = () => {
   };
   const signInWithGoogle = async () => {
     await signInWithGooglepopup();
+  };
+  const changeToSigninPage = () => {
+    console.log(123);
+    navigator("/login");
   };
   return (
     <div className="singin-container">
@@ -110,10 +134,25 @@ const SigningIn = () => {
           value={password}
         />
         <div className="button-section1">
-          <Button type="submit">Sign In</Button>
+          <Button type="submit">
+            {loading ? (
+              <CircularProgress
+                size={25}
+                sx={{
+                  margin: "1rem 0",
+                }}
+              />
+            ) : (
+              "Sigin in"
+            )}
+          </Button>
         </div>
+
+        <Link onClick={changeToSigninPage}>
+          Don't have an account? Please SignUp
+        </Link>
       </form>
     </div>
   );
 };
-export default SigningIn;
+export default Loginform;
