@@ -1,0 +1,33 @@
+.nav-box{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    height: 70px;
+    
+}
+.nav-container{
+    display: flex;
+    justify-content:space-around;
+   /* border: 1px solid red; */
+   width: 35rem;
+}
+.profile-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: inherit;
+}
+.buttonlength{
+    width: 5rem;
+    border-radius: 30px;
+}
+.profile-icons{
+    margin-left: 5px;
+}
+.cartdisplayforscreens {
+    display: none;
+}
+/* .textField{
+    border-radius: 30px;
+} */

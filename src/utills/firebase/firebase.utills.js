@@ -17,7 +17,12 @@ import {
   writeBatch,
   query,
   getDocs,
+  addDoc,
+  updateDoc,
+  getDocFromCache,
+  arrayUnion,
 } from "firebase/firestore";
+import SHOP_DATA from "../../store-data/shop-data";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBmKmNo2tmgQKHnYnTg16SFQClI47YyWdI",
@@ -31,15 +36,82 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
+export const db = getFirestore();
+
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
   prompts: "select_account",
 });
 
+// for adding user new user information
+
 export const auth = getAuth();
 export const signInWithGooglepopup = () => signInWithPopup(auth, provider);
 
-export const db = getFirestore();
+export const secondAddColectionAndDocuments = async () => {
+  try {
+    const docRef = await setDoc(collection(db, "Farm products"), SHOP_DATA);
+    console.log("Upload Successfull");
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
+// secondAddColectionAndDocuments();
+
+// for adding documents------------------------
+export const settingDocuments = async (docName, docData) => {
+  const covertdocName = docName.toLowerCase();
+  try {
+    const addnewDoc = await setDoc(
+      doc(db, "Farm products", covertdocName),
+      docData
+    );
+
+    console.log("Document written with ID: ");
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+// settingDocuments();
+
+//updating documents
+
+// const addingData = {
+//   id: 4,
+//   name: "Grey Brim",
+//   imageUrl: "https://i.ibb.co/RjBLWxB/grey-brim.png",
+//   price: 25,
+// };
+// // export const upDatingDocuments = async () => {
+//   try {
+//     const washingtonRef = doc(db, "Farm products", "packaged products");
+//     await setDoc(
+//       washingtonRef,
+//       {
+//         items: addingData,
+//       },
+//       { merge: true }
+//     );
+//     console.log("Document update successful");
+//   } catch (e) {
+//     console.error("Error adding document: ", e);
+//   }
+// };
+
+// upDatingDocuments();
+
+// Firestore data converter
+
+export const gettingDocuments = async () => {
+  const querySnapshot = await getDocs(collection(db, "Farm products"));
+  querySnapshot.forEach((doc) => {
+    console.log(doc.data().items);
+  });
+};
+
+// gettingDocuments();
+
 // export for adding our data into our firestore database
 export const addColectionAndDocuments = async (collectionKey, objectToAdd) => {
   const collectionRef = collection(db, collectionKey);
@@ -47,9 +119,93 @@ export const addColectionAndDocuments = async (collectionKey, objectToAdd) => {
   objectToAdd.forEach((object) => {
     const docRef = doc(collectionRef, object.title.toLowerCase());
     batch.set(docRef, object);
+    console.log("done 2222");
   });
   await batch.commit();
-  console.log("done");
+};
+
+const info = [
+  "export products",
+
+  "furit",
+
+  "grain products",
+
+  "packaged products",
+
+  "palm oil",
+
+  "seed products",
+
+  "tuber",
+];
+// export const subCollections = () => {
+//   for (const element of info) {
+//     const val = doc(db, "Farm Products", element);
+//     const collectionval = collection(val, "Product list");
+//     addDoc(collectionval, { addingData });
+//     console.log("complate");
+//   }
+// };
+// subCollections();
+
+export const subCollections = (category, dataToUpload) => {
+  const commonIput = category.toLowerCase();
+  const val = doc(db, "Farm Products", commonIput);
+  const collectionval = collection(val, "Product list");
+  addDoc(collectionval, dataToUpload);
+};
+
+// subCollections("export products", addingData);
+
+export const getCollections = async () => {
+  let outputValue = [];
+  for (const element of info) {
+    const val = doc(db, "Farm Products", element);
+    const collectionval = collection(val, "Product list");
+    const data = await getDocs(collectionval);
+
+    const result = data.docs.map((output) => ({
+      ...output.data(),
+      id: output.id,
+    }));
+    outputValue.push(result);
+  }
+  return outputValue;
+};
+// getCollections();
+// addColectionAndDocuments("Farm products", SHOP_DATA);
+
+const additionalCollectionAndDoc = async () => {
+  const frankDocRef = doc(db, "Farm Products", "packaged product");
+  await setDoc(frankDocRef, {
+    title: "packaged product",
+    items: [
+      {
+        id: 1,
+        name: "Brown Brim",
+        imageUrl: "https://i.ibb.co/ZYW3VTp/brown-brim.png",
+        price: 25,
+      },
+    ],
+  });
+
+  // additionalCollectionAndDoc();
+
+  // To update age and favorite color:
+  await updateDoc(frankDocRef, {
+    age: 13,
+    "favorites.color": "Red",
+  });
+};
+
+export const uploadDataToDatabase = async (data) => {
+  try {
+    await setDoc(doc(db, "Cities", "LA"), data);
+    alert("Data upload successfull");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getCategoriesAndDocument = async () => {
@@ -63,6 +219,21 @@ export const getCategoriesAndDocument = async () => {
   });
   return categoryMap;
 };
+
+const mydata = getCategoriesAndDocument();
+console.log(mydata);
+const getCitiesDocument = async () => {
+  const collectionRef = doc(db, "Cities", "LA");
+  const querySnapshot = await getDoc(collectionRef);
+  if (querySnapshot.exists()) {
+    console.log("Document data:", querySnapshot.data());
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+    return console.log("here::", querySnapshot);
+  }
+};
+// getCitiesDocument();
 
 export const createUserDocumentFromAuth = async (
   userAuth,

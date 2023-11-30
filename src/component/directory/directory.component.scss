@@ -1,6 +1,73 @@
 .directory-container {
   width: 100%;
   display: flex;
+  // display: none;
   flex-wrap: wrap;
-  justify-content: space-between;
+
+}
+
+.logo {
+  border: 2px solid red;
+  display: flex;
+  position: relative;
+  top: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo_image {
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+}
+
+.dashbored_menu {
+  // display: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 280px;
+  border: 2px solid red;
+}
+
+.sideberlist {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#icon {
+  border: 2px solid red;
+  flex: 30%;
+  display: grid;
+  place-items: center;
+  height: inherit;
+}
+
+#title {
+  border: 2px solid rgb(0, 0, 0);
+  flex: 70%;
+  color: black;
+  height: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.data-row {
+  display: flex;
+  flex-direction: row;
+  height: 5rem;
+  border: 2px solid red;
+  width: auto;
+  list-style-type: none;
+  //       margin: 0%;
+  //       display: flex;
+  //       flex-direction: row;
+  //       color: gray;
+  //       justify-content: center;
+  //       align-items: center;
 }

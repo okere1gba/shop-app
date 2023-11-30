@@ -7,17 +7,21 @@ const ProductCard = ({ product }) => {
   const { addItemToCart } = useContext(CartContext);
   const addProductToCart = () => addItemToCart(product);
 
-  const { name, price, imageUrl } = product;
+  const { name, price, imgUrl } = product;
   return (
     <div className="product-card-container">
-      <img src={imageUrl} alt={`${name}`} />
-      <div className="footer">
-        <span className="name">{name}</span>
-        <span className="price">{price}</span>
+      <div>
+        <img src={imgUrl} alt={`${name}`} />
       </div>
-      <Button buttonType="inverted" onClick={addProductToCart}>
-        Add to cart
-      </Button>
+
+      <div className="name">{name}</div>
+      <div className="price">{price}</div>
+
+      <div>
+        <Button buttonType="logo" onClick={addProductToCart}>
+          Add to cart
+        </Button>
+      </div>
     </div>
   );
 };

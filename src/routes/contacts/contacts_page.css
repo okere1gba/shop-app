@@ -1,0 +1,53 @@
+.contact {
+    background-color: rgb(222, 235, 231);
+    display: flex;
+    align-items: center;
+    height: 80vh;
+    border: 1px solid red;
+    margin: 2rem;
+    border-radius: 1rem;
+
+}
+
+.first_inner {
+    background-color: aliceblue;
+
+    padding: 1rem;
+    margin: 20px;
+
+
+}
+
+.second_inner {
+    width: 50vw;
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+
+
+}
+
+.message_form {
+
+    background-color: white;
+}
+
+.span {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+    width: 50%;
+}
+
+.image_height {
+    height: auto;
+    font-size: 60px;
+    background-color: rgb(8, 8, 101);
+    color: white;
+    border-radius: 6px;
+
+}
+
+.description {
+    margin-left: 2rem;
+}

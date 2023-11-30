@@ -75,7 +75,7 @@ const LoginPage = () => {
       .then((response) => {
         console.log("111");
         if (response) {
-          navigator("/home");
+          navigator("/home/dashboard");
         }
       })
 

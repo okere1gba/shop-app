@@ -1,0 +1,29 @@
+.alignment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.size {
+    height: 200px;
+    width: 200px;
+}
+.butt_width{
+    margin: 20px;
+    width: 100px;
+    border: 1px solid blue;
+}
+.margin{
+    margin: 20px;
+}
+.labels{
+    display: inline-block;
+}
+.form_align{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 50vw;
+}

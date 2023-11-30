@@ -11,6 +11,9 @@ import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import ClearIcon from "@mui/icons-material/Clear";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
+import okeresimage from "../../asset/profile picture-1.jpg";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import logolink from "../../component/logolink component/logolink";
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
@@ -43,22 +46,32 @@ const Navigation = () => {
   //  };
   return (
     <Fragment>
-      <div className="navigation">
-        <Link className="logo-container " to="/">
-          <Crwnlogo className="logo" />
-        </Link>
-
-        <div className="nav" id={menubar ? "nav-link-visablity" : ""}>
+      <div className={currentUser ? "navigation2" : "navigation"}>
+        <div>
           {currentUser ? (
-            <div className="nav-links-container">
-              <Link className="nav-link" onClick={restore_NAV} to="/home">
-                SHOP
+            ""
+          ) : (
+            <Link className="logo-container " to="/">
+              {/* <Crwnlogo className="logo" /> */}
+              <img className="image" src={okeresimage} alt="waiting" />
+            </Link>
+          )}
+        </div>
+        <div id="nav" className={menubar ? "#nav active" : "#nav"}>
+          {currentUser ? (
+            <div id="nav-links-container">
+              {/* <Link className="nav-link" onClick={restore_NAV} to="/dashboard">
+                Dashboard
               </Link>
 
-              <Link className="nav-link" onClick={restore_NAV} to="/shop">
-                Explore
-              </Link>
-              {currentUser ? (
+              <Link
+                className="nav-link"
+                onClick={restore_NAV}
+                to="/productupload"
+              >
+                Upload
+              </Link> */}
+              {/* {currentUser ? (
                 <span className="nav-link" onClick={signOut}>
                   Sign Out
                 </span>
@@ -66,22 +79,35 @@ const Navigation = () => {
                 <Link className="nav-link" onClick={restore_NAV} to="/auth">
                   SIGN IN
                 </Link>
-              )}
-              <CartIcon />
+              )} */}
+
+              <AccountCircleIcon sx={{ height: "50px", width: "50px" }} />
             </div>
           ) : (
-            <div className="nav-links-container">
-              <Link className="nav-link" onClick={restore_NAV} to="/shop">
-                See Designs
+            <div id="nav-links-container">
+              <Link
+                className="nav-link"
+                onClick={restore_NAV}
+                to="products/sections"
+              >
+                Products
+              </Link>
+              <Link className="nav-link" onClick={restore_NAV} to="/about">
+                Abouts
+              </Link>
+              <Link className="nav-link" onClick={restore_NAV} to="/contact">
+                Contacts
+              </Link>
+              <Link className="nav-link" onClick={restore_NAV} to="/upload">
+                Upload
               </Link>
               <Link className="nav-link" onClick={restore_NAV} to="/login">
                 Login
               </Link>
-
               <Link className="nav-link" onClick={restore_NAV} to="/signup">
                 Register
               </Link>
-
+              <CartIcon />
               {/* <div className="linkers">
               <a href="/">
                 <i className="fab fa-linkedin"></i>
@@ -102,10 +128,10 @@ const Navigation = () => {
         <div className="menuIcon">
           {menubar ? (
             <div>
-              <ClearIcon onClick={changeaction} />
+              <ClearIcon sx={{ fontSize: "35px" }} onClick={changeaction} />
             </div>
           ) : (
-            <ClearAllIcon onClick={changeaction} />
+            <ClearAllIcon sx={{ fontSize: "35px" }} onClick={changeaction} />
           )}
         </div>
       </div>
